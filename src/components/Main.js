@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 
 import ImgFigure from './ImgFigure'
+import ControllerUnit from './ControllerUnit'
 
 // let yeomanImage = require('../images/yeoman.png');
 
@@ -58,8 +59,8 @@ let AppComponent = React.createClass({
    * @param index 当前被执行inverse操作的图片索引
    * @return {Function} 这是一个闭包函数，其内return一个真正待被执行的函数
    * */
-  inverse: function(index) {
-    return function() {
+  inverse: function (index) {
+    return function () {
       let imgsArrangeArr = this.state.imgsArrangeArr;
       imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse
       this.setState({
@@ -148,8 +149,8 @@ let AppComponent = React.createClass({
    * @param index, 需要被居中的图片对应的索引
    * @return {Function}
    * */
-  center: function(index) {
-    return function() {
+  center: function (index) {
+    return function () {
       this.rearrange(index)
     }.bind(this)
   },
@@ -220,7 +221,11 @@ let AppComponent = React.createClass({
           isCenter: false
         }
       }
-      imgFigures.push(<ImgFigure data={value} key={index} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>)
+      imgFigures.push(<ImgFigure data={value} key={index} ref={'imgFigure' + index}
+                                 arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)}
+                                 center={this.center(index)}/>)
+      controllerUnits.push(<ControllerUnit key={index} inverse={this.inverse(index)} center={this.center(index)}
+                                           arrange={this.state.imgsArrangeArr[index]}/>)
     }.bind(this))
     return (
       <section className="stage" ref="stage">
